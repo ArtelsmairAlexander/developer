@@ -1,6 +1,5 @@
 /*
-Create by Learn Web Developement
-Youtube channel : https://www.youtube.com/channel/UC8n8ftV94ZU_DJLOLtrpORA
+Created by Artelsmair Alexander
 */
 
 const cvs = document.getElementById("snake");
@@ -86,6 +85,58 @@ function collision(head,array){
     return false;
 }
 
+
+
+//restart
+function restart() {
+  
+// create the food
+
+food = {
+    x : Math.floor(Math.random()*17+1) * box,
+    y : Math.floor(Math.random()*15+3) * box
+}
+   
+    
+    snake[0] = {
+    x : 9 * box,
+    y : 10 * box
+};
+    snake[1] = {
+    x : 9 * box,
+    y : 10 * box
+};
+    
+    // old head position
+    snakeX = snake[0].x;
+    snakeY = snake[0].y;
+    
+    
+    for( let i = snake.length; i > 0 ; i--){
+        snake.pop();
+    }
+    
+    let newHead = {
+        x : snakeX,
+        y : snakeY
+    }
+
+// create the score var
+
+score = 0;
+    
+    // !d
+    if( d == "LEFT") d = "RIGHT";
+    if( d == "UP") d = "DOWN";
+    if( d == "RIGHT") d = "LEFT";
+    if( d == "DOWN") d = "UP";
+    
+    
+
+};
+
+
+
 // draw everything to the canvas
 
 function draw(){
@@ -101,6 +152,8 @@ function draw(){
     }
     
     ctx.drawImage(foodImg, food.x, food.y);
+    
+    
     
     // old head position
     let snakeX = snake[0].x;
@@ -136,8 +189,10 @@ function draw(){
     // game over
     
     if(snakeX < box || snakeX > 17 * box || snakeY < 3*box || snakeY > 17*box || collision(newHead,snake)){
-        clearInterval(game);
+        
         dead.play();
+        restart();
+       
     }
     
     snake.unshift(newHead);
